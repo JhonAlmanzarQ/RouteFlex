@@ -4,6 +4,7 @@ import com.software.RouteFlex.models.Usuario;
 import com.software.RouteFlex.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,9 @@ public class UsuarioService implements IUsuarioService {
 
     @Autowired
     UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public List<Usuario> listarUsuario() {
@@ -30,7 +34,7 @@ public class UsuarioService implements IUsuarioService {
     @Override
     public Usuario crearUsuario(Usuario usuario) {
         try {
-            // Intentamos guardar al usuario
+            usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
             return usuarioRepository.save(usuario);
         } catch (DataIntegrityViolationException e) {
             throw new IllegalArgumentException("El nombre de usuario ya está en uso.");
