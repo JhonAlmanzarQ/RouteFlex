@@ -2,11 +2,14 @@ package com.software.RouteFlex.config.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.software.RouteFlex.models.Usuario;
+import com.software.RouteFlex.repositories.UsuarioRepository;
+import com.software.RouteFlex.services.JpaUsuarioService;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,9 +27,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private AuthenticationManager authenticationManager;
 
+    private JpaUsuarioService jpaUsuarioService;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
+
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, JpaUsuarioService jpaUsuarioService) {
         this.authenticationManager = authenticationManager;
+        this.jpaUsuarioService = jpaUsuarioService;
     }
 
     @Override
@@ -52,6 +58,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         User usuario = (User) authResult.getPrincipal();
         String username = usuario.getUsername();
+
+        Usuario usuarioDetails = jpaUsuarioService.findByNombre(username);
+
         String token = Jwts.builder()
                 .subject(username)
                 .expiration(new Date(System.currentTimeMillis() + 14400000)) //4 horas
@@ -63,12 +72,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Map<String, String> body = new HashMap<>();
         body.put("token", token);
         body.put("nombre", username);
+        body.put("id", String.valueOf(usuarioDetails.getIdUsuario()));
         body.put("mensaje", String.format("Hola %s haz iniciado sesion con exito", username));
 
         response.getWriter().write(new ObjectMapper().writeValueAsString(body));
         response.setContentType(CONTENT_TYPE);
         response.setStatus(200);
-
     }
 
     @Override

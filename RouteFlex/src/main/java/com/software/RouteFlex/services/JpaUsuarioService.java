@@ -34,4 +34,8 @@ public class JpaUsuarioService implements UserDetailsService {
                 .authorities(new ArrayList<>())
                 .build();
     }
+
+    public Usuario findByNombre(String nombre) {
+        return usuarioRepository.findByNombre(nombre);
+    }
 }
