@@ -29,7 +29,6 @@ public class Conductor {
 
     private String telefono;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String contrasena;
 
     @ManyToOne

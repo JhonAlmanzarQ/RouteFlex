@@ -10,10 +10,11 @@
                 <a (click)="displaySignupForm()" class="sign-up-link">Crear Cuenta</a>
             </p>
             <div class="button-container">
-                <button class="login-button" (click)="displayLoginForm()">Ingresar Conductor</button>
-                <button class="login-button" (click)="displayLoginForm()">Ingresar Administrador</button>
-                <button class="free-button" (click)="displayLoginForm()">Ingresar Gratis</button>
-            </div>
+                <button class="login-button" (click)="displayLoginForm('conductor')">Ingresar Conductor</button>
+                <button class="login-button" (click)="displayLoginForm('usuario')">Ingresar Administrador</button>
+                <button class="free-button" (click)="displayLoginForm('usuario')">Ingresar Gratis</button>
+              </div>
+              
         </div>
     </div>
 
@@ -51,13 +52,14 @@
 
     <!-- Formulario de Crear Cuenta -->
     <div *ngIf="showSignupForm" class="form-container">
-        <form>
+        <form  (ngSubmit)="createUser()">
             <div class="form-group">
                 <label for="name">Nombre:</label>
                 <input
                     type="text"
                     id="name"
                     name="name"
+                    [(ngModel)]="newUser.nombre"
                     placeholder="Nombre"
                     required>
             </div>
@@ -67,6 +69,7 @@
                     type="text"
                     id="lastName"
                     name="lastName"
+                    [(ngModel)]="newUser.apellido"
                     placeholder="Apellido"
                     required>
             </div>
@@ -76,6 +79,7 @@
                     type="email"
                     id="email"
                     name="email"
+                    [(ngModel)]="newUser.correo"
                     placeholder="Correo"
                     required>
             </div>
@@ -85,6 +89,7 @@
                     type="password"
                     id="password"
                     name="password"
+                    [(ngModel)]="newUser.contrasena"
                     placeholder="Contraseña"
                     required>
             </div>
@@ -94,6 +99,7 @@
                     type="tel"
                     id="telephone"
                     name="telephone"
+                    [(ngModel)]="newUser.telefono"
                     placeholder="Teléfono"
                     required>
             </div>
@@ -105,5 +111,6 @@
             </div>
         </form>
     </div>
+
 </div>
 

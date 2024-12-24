@@ -46,5 +46,15 @@ public class PaqueteEnvioController {
         }
     }
 
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<?> eliminar(@PathVariable Long id){
+        try {
+            paqueteEnvioService.eliminarPaqueteEnvio(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e){
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
 }

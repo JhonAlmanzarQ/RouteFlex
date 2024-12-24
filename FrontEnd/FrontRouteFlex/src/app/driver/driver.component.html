@@ -33,35 +33,32 @@
 
             <!-- Inventory Section -->
             <section class="inventory">
-                <h2>INVENTARIO VEHICULOS</h2>
+                <h2>INVENTARIO CONDUCTOR</h2>
                 <div class="actions">
                     <p></p>
-                    <button class="btn-primary" (click)="resetForm(); showForm = !showForm">Registrar Nuevo Vehículo</button>
+                    <button class="btn-primary" (click)="resetForm(); showForm = !showForm">Registrar Nuevo Conductor</button>
                 </div>
 
                 <!-- Formulario para crear nuevo vehículo -->
                 <div *ngIf="showForm" class="vehicle-form">
-                    <form (ngSubmit)="crearVehicle()">
-                      <label for="placa">Placa:</label>
-                      <input id="placa" type="text" [(ngModel)]="newVehicle.placa" name="placa" required>
-                  
-                      <label for="peso">Peso:</label>
-                      <input id="peso" type="number" [(ngModel)]="newVehicle.peso" name="peso" required>
-                  
-                      <label for="marca">Marca:</label>
-                      <input id="marca" type="text" [(ngModel)]="newVehicle.marca" name="marca" required>
-                  
-                      <label for="tipoVehiculo">Tipo de Vehículo:</label>
-                      <input id="tipoVehiculo" type="text" [(ngModel)]="newVehicle.tipoVehiculo" name="tipoVehiculo" required>
-                  
-                      <label for="estado">Estado:</label>
-                      <select id="estado" [(ngModel)]="newVehicle.estado" name="estado" required>
-                        <option value="true">Activo</option>
-                        <option value="false">Inactivo</option>
-                      </select>
+                    <form (ngSubmit)="createDriver()">
+                      <label for="nombre">Nombre:</label>
+                      <input id="nombre" type="text" [(ngModel)]="newDriver.nombre" name="nombre" required>
+
+                      <label for="apellido">Apellido:</label>
+                      <input id="apellido" type="text" [(ngModel)]="newDriver.apellido" name="apellido" required>
+
+                      <label for="correo">Correo</label>
+                      <input id="correo" type="email" [(ngModel)]="newDriver.correo" name="correo" required>
+
+                      <label for="contrasena">Contraseña</label>
+                      <input id="contrasena" type="password" [(ngModel)]="newDriver.contrasena" name="contrasena" required>
+
+                      <label for="telefono">Telefono:</label>
+                      <input id="telefono" type="text" [(ngModel)]="newDriver.telefono" name="telefono" required>
                   
                       <button type="submit" class="btn-primary">
-                        {{ isEdit ? 'Actualizar Vehículo' : 'Registrar Vehículo' }}
+                        {{ isEdit ? 'Actualizar Conductor' : 'Registrar Conductor' }}
                       </button>
                       <button type="button" class="btn-secondary" (click)="showForm = false">Cancelar</button>
                     </form>
@@ -73,25 +70,23 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Tipo</th>
-                            <th>Peso</th>
-                            <th>Marca</th>
-                            <th>Placa</th>
-                            <th>Estado</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Correo</th>
+                            <th>Telefono</th>
                             <th>Acción</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let vehicle of vehicles">
-                            <td>{{ vehicle.idVehiculo }}</td>
-                            <td>{{ vehicle.tipoVehiculo }}</td>
-                            <td>{{ vehicle.peso }}</td>
-                            <td>{{ vehicle.marca }}</td>
-                            <td>{{ vehicle.placa }}</td>
-                            <td>{{ vehicle.estado ? 'Activo' : 'Inactivo' }}</td>
+                        <tr *ngFor="let driver of drivers">
+                            <td>{{ driver.idConductor }}</td>
+                            <td>{{ driver.nombre }}</td>
+                            <td>{{ driver.apellido }}</td>
+                            <td>{{ driver.correo }}</td>
+                            <td>{{ driver.telefono }}</td>
                             <td>
-                                <button class="btn edit" (click)="editVehicle(vehicle)">✎</button>
-                                <button class="btn delete" (click)="deleteVehicle(vehicle.idVehiculo)">🗑</button>
+                                <button class="btn edit" (click)="editDriver(driver)">✎</button>
+                                <button class="btn delete" (click)="deleteDriver(driver.idConductor)">🗑</button>
                             </td>
                         </tr>
                     </tbody>

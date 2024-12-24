@@ -46,7 +46,7 @@ public class SpringSegurity {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.authorizeHttpRequests( (authz) -> authz
-                .requestMatchers("/usuario/**").permitAll()
+                .requestMatchers("/usuario/**", "/conductor/**").permitAll()
                 .anyRequest().authenticated())
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(), jpaUsuarioService))
                 .addFilterBefore(new JwtValidationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)

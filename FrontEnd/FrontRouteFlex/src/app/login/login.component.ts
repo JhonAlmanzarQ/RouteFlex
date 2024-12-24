@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginService } from '../services/login.service';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -18,11 +19,21 @@ export class LoginComponent {
   name: string = '';
   password: string = '';
   mensaje: string = '';
+  userType: string = '';
 
-  constructor(private loginservice: LoginService) { }
+  newUser: any = {
+    nombre: '',
+    apellido: '',
+    correo: '',
+    contrasena: '',
+    telefono: ''
+  };
+
+  constructor(private loginservice: LoginService, private router: Router) { }
 
 
-  displayLoginForm() {
+  displayLoginForm(userType: string) {
+    this.userType = userType;
     this.showLoginForm = true;
     this.showSignupForm = false;
   }
@@ -35,17 +46,56 @@ export class LoginComponent {
     this.showLoginForm = false;
   }
 
-  login() {
-    this.loginservice.login(this.name, this.password).subscribe({
+
+  login(){
+    if(this.userType === 'usuario') {
+      this.loginUser();
+    } else {
+      this.loginDriver();
+    }
+  }
+
+  loginUser() {
+    this.loginservice.loginUsuario(this.name, this.password).subscribe({
       next: (response) => {
         localStorage.setItem('token', response.token);
-        console.log(response);
+        this.router.navigate(['/vehicle']); 
       },
       error: (err) => {
-        this.mensaje = 'Error al iniciar sesión.';
-        console.error(err);
+        this.mensaje = 'Usuario o contraseña incorrectos.';
+        window.alert('Error al iniciar sesión: Nombre o contraseña incorrectos');
       }
     });
+  }
+
+  loginDriver() {
+    this.loginservice.loginConductor(this.name, this.password).subscribe({
+      next: (response) => {
+        this.router.navigate(['/vehicle']);
+      },
+      error: (err) => {
+        window.alert('Error al iniciar sesión: Nombre o contraseña incorrectos');
+      }
+    });
+  }
+
+  createUser() {
+
+    if (!this.newUser.nombre || !this.newUser.apellido || !this.newUser.correo || !this.newUser.contrasena || !this.newUser.telefono) {
+      window.alert('Todos los campos son obligatorios');
+      return;
+    }
+    this.loginservice.createUsuario(this.newUser).subscribe({
+      next: (response) => {
+        console.log('Usuario creado:', response);
+        this.mensaje = 'Usuario creado exitosamente.';
+        this.hideForm();
+      },
+      error: (err) => {
+        console.error('Error al crear usuario:', err);
+        this.mensaje = 'Error al crear el usuario. Inténtalo de nuevo.';
+      }
+    })
   }
 
 }
