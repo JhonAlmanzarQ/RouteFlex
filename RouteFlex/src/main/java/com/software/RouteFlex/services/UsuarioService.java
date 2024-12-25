@@ -51,7 +51,7 @@ public class UsuarioService implements IUsuarioService {
             usuarioActualizar.setApellido(usuario.getApellido());
             usuarioActualizar.setCorreo(usuario.getCorreo());
             usuarioActualizar.setContrasena(usuario.getContrasena());
-            usuarioActualizar.setTelefono(usuario.getContrasena());
+            usuarioActualizar.setTelefono(usuario.getTelefono());
 
             return usuarioRepository.save(usuarioActualizar);
         } else {

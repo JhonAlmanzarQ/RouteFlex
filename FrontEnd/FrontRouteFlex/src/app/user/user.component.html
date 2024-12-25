@@ -1,0 +1,61 @@
+<body>
+    <div class="container">
+        <!-- Contenido Principal -->
+        <main class="main-content">
+            <header class="header">
+                <div class="location">
+                    <button class="btn-information" routerLink="/">Cerrar Sesión</button>
+                    <button class="btn-information" >Acerca RouteFlex </button>
+                    <button class="btn-information" routerLink="/vehicle" >Volver </button>
+                </div>
+                <div class="user">
+                    <p>{{ usuario.nombre }}</p>
+                    <img src="https://via.placeholder.com/40" alt="User">
+                </div>
+            </header>
+
+            <!-- Información de Usuario -->
+            <section class="user-info">
+                <h2>Información del Usuario</h2>
+                <div class="user-details">
+                    <p><strong>ID:</strong> {{ usuario.idUsuario }}</p>
+                    <p><strong>Nombre:</strong> {{ usuario.nombre }}</p>
+                    <p><strong>Apellido:</strong> {{ usuario.apellido }}</p>
+                    <p><strong>Correo:</strong> {{ usuario.correo }}</p>
+                    <p><strong>Teléfono:</strong> {{ usuario.telefono }}</p>
+                </div>
+                <div class="actions">
+                    <button class="btn-primary" (click)="toggleForm()">Actualizar Usuario</button>
+                    <button class="btn-danger" (click)="deleteUsuario(usuario.idUsuario)">Eliminar Usuario</button>
+                </div>
+            </section>
+
+            <!-- Formulario de Actualización -->
+            <section *ngIf="showForm" class="update-form">
+                <h2>Actualizar Información</h2>
+                <form (ngSubmit)="updateUsuario()">
+                  <label for="nombre">Nombre:</label>
+                  <input id="nombre" type="text" [(ngModel)]="usuarioEditable.nombre" name="nombre" required>
+              
+                  <label for="apellido">Apellido:</label>
+                  <input id="apellido" type="text" [(ngModel)]="usuarioEditable.apellido" name="apellido" required>
+              
+                  <label for="correo">Correo:</label>
+                  <input id="correo" type="email" [(ngModel)]="usuarioEditable.correo" name="correo" required>
+              
+                  <label for="telefono">Teléfono:</label>
+                  <input id="telefono" type="text" [(ngModel)]="usuarioEditable.telefono" name="telefono" required>
+              
+                  <label for="contrasena">Contraseña:</label>
+                  <input id="contrasena" type="password" [(ngModel)]="usuarioEditable.contrasena" name="contrasena" required>
+              
+                  <div class="form-actions">
+                    <button type="submit" class="btn-primary">Guardar Cambios</button>
+                    <button type="button" class="btn-secondary" (click)="toggleForm()">Volver</button>
+                  </div>
+                </form>
+              </section>
+              
+        </main>
+    </div>
+</body>

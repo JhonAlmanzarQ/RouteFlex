@@ -59,7 +59,7 @@ export class LoginComponent {
     this.loginservice.loginUsuario(this.name, this.password).subscribe({
       next: (response) => {
         localStorage.setItem('token', response.token);
-        this.router.navigate(['/vehicle']); 
+        this.router.navigate(['/driver']); 
       },
       error: (err) => {
         this.mensaje = 'Usuario o contraseña incorrectos.';

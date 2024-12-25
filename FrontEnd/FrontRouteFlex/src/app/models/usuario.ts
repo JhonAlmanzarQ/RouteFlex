@@ -1,9 +1,9 @@
 export interface usuario{
-    IdUsuario:number;
+    idUsuario:number;
     nombre:String;
     apellido:String;
     correo:String;
-    telefono:number;
+    telefono:String;
     contrasena:String
 
 }  

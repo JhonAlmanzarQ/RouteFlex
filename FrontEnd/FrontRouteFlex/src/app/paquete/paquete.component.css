@@ -96,6 +96,11 @@ body {
     border-radius: 5px;
 }
 
+.header .user-link {
+    text-decoration: none;
+    color: inherit;
+}
+
 .header .user {
     display: flex;
     align-items: center;
