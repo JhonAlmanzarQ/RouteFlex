@@ -52,12 +52,19 @@ public class AsignarRutaService implements IAsignarRutaService {
                     asignarRuta.getVehiculo().getIdVehiculo(),
                     asignarRuta.getVehiculo().getTipoVehiculo()
             );
+            // Mapeo de la ConductorDTO
+            AsignarRutaDto.ConductorDTO conductorDTO = new AsignarRutaDto.ConductorDTO(
+                    asignarRuta.getConductor().getIdConductor(),
+                    asignarRuta.getConductor().getNombre(),
+                    asignarRuta.getConductor().getApellido()
+            );
 
-            // Retornar el DTO completo con el ID de la asignación de ruta
+            // Retornar el DTO completo
             return new AsignarRutaDto(
-                    asignarRuta.getIdAsignarRuta(),  // Agregar el ID de la asignación
+                    asignarRuta.getIdAsignarRuta(),
                     rutaDTO,
-                    vehiculoDTO
+                    vehiculoDTO,
+                    conductorDTO
             );
         }).collect(Collectors.toList());
     }

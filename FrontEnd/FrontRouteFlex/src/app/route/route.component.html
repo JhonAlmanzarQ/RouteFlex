@@ -1,0 +1,83 @@
+<div class="container">
+    <!-- Barra Izquierda -->
+    <aside class="sidebar">
+        <div class="logo">
+            <h1>Route<span>Flex</span></h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a routerLink="/driver" routerLinkActive="active"><i class="icon-conductor"></i> Conductor</a></li>
+                <li><a routerLink="/vehicle" routerLinkActive="active"><i class="icon-vehiculo"></i> Vehículo</a></li>
+                <li><a routerLink="/paquete" routerLinkActive="active"><i class="icon-paquete"></i> Paquete</a></li>
+                <li><a routerLink="/route" routerLinkActive="active"><i class="icon-ruta"></i> Ruta</a></li>
+                <li><a routerLink="/assign" routerLinkActive="active"><i class="icon-conductor"></i> Asignar Ruta</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="header">
+            <div class="location">
+                <button class="btn-information" routerLink="/">Cerrar Sesión</button>
+                <button class="btn-information">Acerca RouteFlex</button>
+            </div>
+            <a href="/user" class="user-link">
+                <div class="user">
+                    <p>Elias Castillo</p>
+                    <img src="https://via.placeholder.com/40" alt="User">
+                </div>
+            </a>
+        </header>
+
+        <!-- Inventory Section -->
+        <section class="inventory">
+            <h2>INVENTARIO RUTAS</h2>
+            <div class="actions">
+                <p></p>
+                <button class="btn-primary" (click)="showForm = true">Registrar Nueva Ruta</button>
+            </div>
+
+            <!-- Formulario para crear nueva ruta -->
+            <div *ngIf="showForm" class="route-form">
+                <h3>Selecciona paquetes para crear una ruta</h3>
+                <form (ngSubmit)="createRoute()">
+                    <ul class="paquete-list">
+                        <li *ngFor="let paquete of paquetes">
+                            <label>
+                                <input type="checkbox" 
+                                       [checked]="selectedPaquetes.includes(paquete)" 
+                                       (change)="togglePaqueteSelection(paquete)">
+                                {{ paquete.nombre }}  -  {{ paquete.direccion }}  -  {{ paquete.fecha }}
+                            </label>
+                        </li>
+                    </ul>
+                    <button type="submit" class="btn-primary">Crear Ruta</button>
+                    <button type="button" class="btn-secondary" (click)="showForm = false">Cancelar</button>
+                </form>
+            </div>
+
+            <!-- Tabla de rutas -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Coordenadas</th>
+                        <th>Direcciones</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let route of routes">
+                        <td>{{ route.idRuta }}</td>
+                        <td>{{ route.coordenadas }}</td>
+                        <td>{{ route.direcciones }}</td>
+                        <td>
+                            <button class="btn delete" (click)="deleteRoute(route.idRuta)">🗑</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</div>

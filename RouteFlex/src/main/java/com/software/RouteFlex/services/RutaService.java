@@ -43,10 +43,12 @@ public class RutaService implements IRutaService {
 
         // Lista para almacenar las coordenadas obtenidas
         List<String> coordenadas = new ArrayList<>();
+        List<String> direcciones = new ArrayList<>();
 
         try {
             // Obtener coordenadas de cada dirección usando la Geocoding API
             for (PaqueteEnvio paquete : paqueteEnvio) {
+                direcciones.add(paquete.getDireccion());
                 String direccionCodificada = URLEncoder.encode(paquete.getDireccion(), "UTF-8");
                 String urlGeocoding = String.format(GEOCODING_URL, direccionCodificada);
 
@@ -91,6 +93,7 @@ public class RutaService implements IRutaService {
                 nuevaRuta.setOverviewPolyline(overviewPolyline);
                 nuevaRuta.setCoordenadas(coordenadas);
                 nuevaRuta.setUsuario(usuario);
+                nuevaRuta.setDirecciones(direcciones);
 
                 rutaRepository.save(nuevaRuta);  // Guardar la nueva ruta en la base de datos
 

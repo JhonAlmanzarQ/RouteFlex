@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IAsignarRutaService {
 
-    //Listar por id conductor
+    //Listar por id usuario
     List<AsignarRuta> listarAsignarUsuario(Long idUsuario);
 
     //Listar por id

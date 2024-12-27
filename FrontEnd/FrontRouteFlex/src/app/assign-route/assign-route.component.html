@@ -1,0 +1,119 @@
+<div class="container">
+  <!-- Barra Izquierda -->
+  <aside class="sidebar">
+      <div class="logo">
+          <h1>Route<span>Flex</span></h1>
+      </div>
+      <nav>
+          <ul>
+              <li><a routerLink="/driver" routerLinkActive="active"><i class="icon-conductor"></i> Conductor</a></li>
+              <li><a routerLink="/vehicle" routerLinkActive="active"><i class="icon-vehiculo"></i> Vehículo</a></li>
+              <li><a routerLink="/paquete" routerLinkActive="active"><i class="icon-paquete"></i> Paquete</a></li>
+              <li><a routerLink="/route" routerLinkActive="active"><i class="icon-ruta"></i> Ruta</a></li>
+              <li><a routerLink="/assign" routerLinkActive="active"><i class="icon-conductor"></i> Asignar Ruta</a></li>
+          </ul>
+      </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+      <header class="header">
+          <div class="location">
+              <button class="btn-information" routerLink="/">Cerrar Sesión</button>
+              <button class="btn-information">Acerca RouteFlex</button>
+          </div>
+          <a href="/user" class="user-link">
+              <div class="user">
+                  <p>Elias Castillo</p>
+                  <img src="https://via.placeholder.com/40" alt="User">
+              </div>
+          </a>
+      </header>
+
+      <!-- Inventory Section -->
+      <section class="inventory">
+          <h2>INVENTARIO RUTAS</h2>
+          <div class="actions">
+              <p></p>
+              <button class="btn-primary" (click)="showForm = true">Registrar Nueva Ruta</button>
+          </div>
+
+          <!-- Formulario para crear Asignar ruta -->
+          <div *ngIf="showForm" class="route-form">
+            <h3>Selecciona para Asignar una Ruta</h3>
+            <form (ngSubmit)="createAssignRoute()" #assignRouteForm="ngForm">
+              <div>
+                <label for="conductor">Conductor:</label>
+                <select
+                  id="conductor"
+                  [(ngModel)]="newAssignRoute.conductor.idConductor"
+                  name="conductor"
+                  required
+                >
+                  <option *ngFor="let driver of drivers" [value]="driver.idConductor">
+                    {{ driver.nombre }}
+                  </option>
+                </select>
+              </div>
+              <div>
+                <label for="vehiculo">Vehículo:</label>
+                <select
+                  id="vehiculo"
+                  [(ngModel)]="newAssignRoute.vehiculo.idVehiculo"
+                  name="vehiculo"
+                  required
+                >
+                  <option *ngFor="let vehicle of vehicles" [value]="vehicle.idVehiculo">
+                    {{ vehicle.tipoVehiculo }}
+                  </option>
+                </select>
+              </div>
+              <div>
+                <label for="ruta">Ruta:</label>
+                <select
+                  id="ruta"
+                  [(ngModel)]="newAssignRoute.ruta.idRuta"
+                  name="ruta"
+                  required
+                >
+                  <option *ngFor="let route of routes" [value]="route.idRuta">
+                    {{ route.idRuta }}
+                  </option>
+                </select>
+              </div>
+              <button class="btn-primary" type="submit" [disabled]="assignRouteForm.invalid">
+                Asignar Ruta
+              </button>
+              <button class="btn-secondary" type="button" (click)="showForm = false">
+                Cancelar
+              </button>
+            </form>
+          </div>
+          
+
+          <!-- Tabla de rutas -->
+          <table>
+              <thead>
+                  <tr>
+                      <th>ID</th>
+                      <th>Nombre Conductor</th>
+                      <th>Tipo vehiculo</th>
+                      <th>Coordenadas</th>
+                      <th>Acción</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let assign of assignRoutesDt">
+                      <td>{{ assign.idAsignarRuta }}</td>
+                      <td>{{ assign.conductor.nombre }}</td>
+                      <td>{{ assign.vehiculo.tipoVehiculo }}</td>
+                      <td>{{ assign.ruta.coordenadas }}</td>
+                      <td>
+                          <button class="btn delete" (click)="deleteAssignRoute(assign.idAsignarRuta)">🗑</button>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </section>
+  </main>
+</div>

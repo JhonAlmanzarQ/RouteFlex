@@ -4,6 +4,8 @@ import { VehicleComponent } from './vehicle/vehicle.component';
 import { DriverComponent } from './driver/driver.component';
 import { PaqueteComponent } from './paquete/paquete.component';
 import { UserComponent } from './user/user.component';
+import { RouteComponent } from './route/route.component';
+import { AssignRouteComponent } from './assign-route/assign-route.component';
 
 export const routes: Routes = [
     {
@@ -25,5 +27,13 @@ export const routes: Routes = [
     {
         path:"user",
         component:UserComponent
+    },
+    {
+        path:"route",
+        component:RouteComponent
+    },
+    {
+        path:"assign",
+        component:AssignRouteComponent
     }
 ];
