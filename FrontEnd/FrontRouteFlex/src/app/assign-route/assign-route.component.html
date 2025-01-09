@@ -8,7 +8,7 @@
           <ul>
               <li><a routerLink="/driver" routerLinkActive="active"><i class="icon-conductor"></i> Conductor</a></li>
               <li><a routerLink="/vehicle" routerLinkActive="active"><i class="icon-vehiculo"></i> Vehículo</a></li>
-              <li><a routerLink="/paquete" routerLinkActive="active"><i class="icon-paquete"></i> Paquete</a></li>
+              <li><a routerLink="/paquete" routerLinkActive="active"><i class="icon-paquete"></i> Orden</a></li>
               <li><a routerLink="/route" routerLinkActive="active"><i class="icon-ruta"></i> Ruta</a></li>
               <li><a routerLink="/assign" routerLinkActive="active"><i class="icon-conductor"></i> Asignar Ruta</a></li>
           </ul>
@@ -24,8 +24,8 @@
           </div>
           <a href="/user" class="user-link">
               <div class="user">
-                  <p>Elias Castillo</p>
-                  <img src="https://via.placeholder.com/40" alt="User">
+                  <p>{{ userName }}</p>
+                  <img src="https://cdn-icons-png.flaticon.com/512/8801/8801434.png" alt="User">
               </div>
           </a>
       </header>
@@ -46,12 +46,12 @@
                 <label for="conductor">Conductor:</label>
                 <select
                   id="conductor"
-                  [(ngModel)]="newAssignRoute.conductor.idConductor"
+                  [(ngModel)]="newAssignRoute.conductor.idConductor "
                   name="conductor"
                   required
                 >
                   <option *ngFor="let driver of drivers" [value]="driver.idConductor">
-                    {{ driver.nombre }}
+                    {{ driver.idConductor }}  -  {{ driver.nombre }}  -  {{driver.apellido}}
                   </option>
                 </select>
               </div>
@@ -64,7 +64,7 @@
                   required
                 >
                   <option *ngFor="let vehicle of vehicles" [value]="vehicle.idVehiculo">
-                    {{ vehicle.tipoVehiculo }}
+                    {{ vehicle.idVehiculo}}  -  {{ vehicle.tipoVehiculo }}  -  {{vehicle.marca}}  -  {{ vehicle.placa }}
                   </option>
                 </select>
               </div>
@@ -77,7 +77,7 @@
                   required
                 >
                   <option *ngFor="let route of routes" [value]="route.idRuta">
-                    {{ route.idRuta }}
+                    {{ route.idRuta }}  -  {{route.direcciones}} 
                   </option>
                 </select>
               </div>

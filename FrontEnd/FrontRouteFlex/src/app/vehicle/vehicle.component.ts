@@ -13,38 +13,59 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 })
 
 export class VehicleComponent implements OnInit {
+
+  idUser!: number;
+
+  userName: string | null = null;
+
   vehicles: vehicle[] = [];
 
   newVehicle: any = {
     usuario: {
-      idUsuario: 1,
+      idUsuario: this.idUser,
     },
     placa: '',
-    peso: 0,
     estado: true,
     marca: '',
     tipoVehiculo: ''
   };
 
-  // Variable para controlar la visibilidad del formulario
   showForm: boolean = false;
 
-  // Variable para controlar si es un nuevo vehículo o una actualización
   isEdit: boolean = false;
 
-  // Variable para almacenar el vehículo en edición
   currentVehicle: any = null;
 
   constructor(private vehicleService: VehicleService, private router: Router) {}
 
+  getId(): void {
+    const usuario = localStorage.getItem('idUser');
+    if (usuario) {
+      this.idUser = parseInt(usuario, 10);  
+    } else {
+      window.alert('Error');;
+    }
+  }
+
+  getName(): void {
+    const user = localStorage.getItem('nameUser');
+    if (user) {
+      this.userName = user;
+    } else {
+      window.alert('Error');
+    }
+  }
+
   ngOnInit(): void {
-    const idUsuario = 1;
-    this.vehicleService.listVehicle(idUsuario).subscribe({
+    this.getName();
+    this.getId();
+    this.vehicleService.listVehicle(this.idUser).subscribe({
       next: (response) => {
         this.vehicles = response;
       },
       error: (err) => {
         window.alert('Error al listar vehículo');
+        console.log(err);
       }
     });
   }
@@ -76,10 +97,9 @@ export class VehicleComponent implements OnInit {
     this.isEdit = false;
     this.newVehicle = {
       usuario: {
-        idUsuario: 1,
+        idUsuario: this.idUser,
       },
       placa: '',
-      peso: 0,
       estado: true,
       marca: '',
       tipoVehiculo: ''

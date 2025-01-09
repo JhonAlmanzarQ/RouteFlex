@@ -20,8 +20,6 @@ public class Vehiculo {
 
     private String TipoVehiculo;
 
-    private Long Peso;
-
     private String Marca;
 
     private String Placa;

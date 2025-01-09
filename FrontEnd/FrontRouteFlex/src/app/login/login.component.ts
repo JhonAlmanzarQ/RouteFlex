@@ -59,6 +59,8 @@ export class LoginComponent {
     this.loginservice.loginUsuario(this.name, this.password).subscribe({
       next: (response) => {
         localStorage.setItem('token', response.token);
+        localStorage.setItem('idUser', response.id);
+        localStorage.setItem('nameUser', response.nombre);
         this.router.navigate(['/driver']); 
       },
       error: (err) => {
@@ -71,7 +73,8 @@ export class LoginComponent {
   loginDriver() {
     this.loginservice.loginConductor(this.name, this.password).subscribe({
       next: (response) => {
-        this.router.navigate(['/vehicle']);
+        localStorage.setItem('conductor', JSON.stringify(response));
+        this.router.navigate(['/homedriver']);
       },
       error: (err) => {
         window.alert('Error al iniciar sesión: Nombre o contraseña incorrectos');

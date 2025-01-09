@@ -13,8 +13,10 @@ import { Router, RouterLink} from '@angular/router';
 })
 export class UserComponent implements OnInit {
 
+  idUser!: number;
+
   usuario: usuario = {
-    idUsuario: 1,
+    idUsuario: this.idUser,
     nombre: '',
     apellido: '',
     correo: '',
@@ -23,7 +25,7 @@ export class UserComponent implements OnInit {
   };
 
   usuarioEditable: usuario = {
-    idUsuario: 1,
+    idUsuario: this.idUser,
     nombre: '',
     apellido: '',
     correo: '',
@@ -35,9 +37,18 @@ export class UserComponent implements OnInit {
 
   constructor(private userService: UserService, private router: Router) {}
 
+  getId(): void {
+    const usuario = localStorage.getItem('idUser');
+    if (usuario) {
+      this.idUser = parseInt(usuario, 10);  
+    } else {
+      window.alert('Error');
+    }
+  }
+
   ngOnInit(): void {
-    const idUser = 1;
-    this.userService.listUsuarioId(idUser).subscribe({
+    this.getId();
+    this.userService.listUsuarioId(this.idUser).subscribe({
       next: (response) => {
         this.usuario = response;
         this.usuarioEditable = { ...response }; 

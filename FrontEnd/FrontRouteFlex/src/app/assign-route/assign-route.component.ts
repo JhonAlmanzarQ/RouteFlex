@@ -20,6 +20,10 @@ import { DriverService } from '../services/driver.service';
 })
 export class AssignRouteComponent implements OnInit {
 
+  idUser!: number;
+
+  userName!: string;
+
   showForm: boolean = false;
 
   assignRoutesDt: assignRouteDto[] = [];
@@ -28,7 +32,7 @@ export class AssignRouteComponent implements OnInit {
   drivers: driver[] = [];
 
   newAssignRoute: assignRoute = {
-    usuario: { idUsuario: 1 }, // Suponiendo que el ID del usuario siempre será el mismo
+    usuario: { idUsuario: this.idUser }, 
     ruta: { idRuta: 0 },
     vehiculo: { idVehiculo: 0 },
     conductor: { idConductor: 0 },
@@ -41,7 +45,27 @@ export class AssignRouteComponent implements OnInit {
     private driverService: DriverService,
     private router: Router) {}
 
+    getId(): void {
+      const usuario = localStorage.getItem('idUser');
+      if (usuario) {
+        this.idUser = parseInt(usuario, 10);  
+      } else {
+        window.alert('Error');;
+      }
+    }
+
+    getName(): void {
+      const user = localStorage.getItem('nameUser');
+      if (user) {
+        this.userName = user;
+      } else {
+        window.alert('Error');
+      }
+    }
+
   ngOnInit(): void {
+    this.getId();
+    this.getName();
     this.listAssignRoute();
     this.listRoutes();
     this.listVehicles();
@@ -51,8 +75,7 @@ export class AssignRouteComponent implements OnInit {
 
   //Listar todo
   listAssignRoute(): void {
-    const idUser = 1;
-    this.assignRouteService.listAssignRoute(idUser).subscribe({
+    this.assignRouteService.listAssignRoute(this.idUser).subscribe({
       next: (response) => {
         this.assignRoutesDt = response;
       },
@@ -63,8 +86,7 @@ export class AssignRouteComponent implements OnInit {
   }
 
   listRoutes(): void {
-    const idUser = 1; // Cambia este ID según sea necesario
-    this.routeService.listRoute(idUser).subscribe({
+    this.routeService.listRoute(this.idUser).subscribe({
       next: (response) => {
         this.routes = response;
       },
@@ -75,8 +97,7 @@ export class AssignRouteComponent implements OnInit {
   }
 
   listVehicles(): void {
-    const idUser = 1;
-    this.vehicleService.listVehicle(idUser).subscribe({
+    this.vehicleService.listVehicle(this.idUser).subscribe({
       next: (response) => {
         this.vehicles = response;
       },
@@ -87,8 +108,7 @@ export class AssignRouteComponent implements OnInit {
   }
 
   listDrivers(): void {
-    const idUser = 1;
-    this.driverService.listDriver(idUser).subscribe({
+    this.driverService.listDriver(this.idUser).subscribe({
       next: (response) => {
         this.drivers = response;
       },
@@ -101,15 +121,46 @@ export class AssignRouteComponent implements OnInit {
 
   //Crear
   createAssignRoute(): void {
-  this.assignRouteService.createAssignRoute(this.newAssignRoute).subscribe({
+    const assignRouteToCreate: assignRoute = {
+      usuario: { idUsuario: this.idUser },
+      ruta: { idRuta: this.newAssignRoute.ruta.idRuta },
+      vehiculo: { idVehiculo: this.newAssignRoute.vehiculo.idVehiculo },
+      conductor: { idConductor: this.newAssignRoute.conductor.idConductor },
+    };
+  
+    this.assignRouteService.createAssignRoute(assignRouteToCreate).subscribe({
       next: () => {
         window.alert('Ruta asignada exitosamente');
+        console.log(assignRouteToCreate.vehiculo.idVehiculo)
+        this.updateVehicleState(assignRouteToCreate.vehiculo.idVehiculo, true)
         this.listAssignRoute(); // Actualizar la lista
         this.showForm = false; // Ocultar el formulario
       },
       error: () => {
         window.alert('Error al asignar la ruta');
-        console.log(this.newAssignRoute)
+        console.log(assignRouteToCreate);
+      },
+    });
+  }
+
+  updateVehicleState(idVehiculo: number, estadoUpdate: boolean): void {
+    // Buscar el vehículo en la lista de vehículos cargados
+    const vehicleToUpdate = this.vehicles.find(vehicle => vehicle.idVehiculo === Number(idVehiculo));
+    if (!vehicleToUpdate) {
+      window.alert('Vehículo no encontrado');
+      return;
+    }
+
+    const updatedVehicle: vehicle = {
+      ...vehicleToUpdate,  
+      estado: estadoUpdate,
+    };
+
+    this.vehicleService.updateVehicle(updatedVehicle).subscribe({
+      next: () => {
+      },
+      error: (err) => {
+        window.alert('Error al actualizar el estado del vehículo');
       },
     });
   }
@@ -117,17 +168,26 @@ export class AssignRouteComponent implements OnInit {
 
   //Eliminar
   deleteAssignRoute(idAsignarRuta: number): void {
-    if (confirm('¿Estás seguro de eliminar este Asignar Ruta?')) {
-      this.assignRouteService.deleteAssignRoute(idAsignarRuta).subscribe({
-        next: () => {
-          this.assignRoutesDt = this.assignRoutesDt.filter(assignRouteDt => assignRouteDt.idAsignarRuta!== idAsignarRuta);
-        },
-        error: () => {
-          window.alert('Error al eliminar Asignar Ruta');
-        }
-      });
+    const assignRouteToDelete = this.assignRoutesDt.find(route => route.idAsignarRuta === idAsignarRuta);
+  
+    if (assignRouteToDelete) {
+      // Obtener el ID del vehículo 
+      const idVehiculo = assignRouteToDelete.vehiculo.idVehiculo;
+  
+      if (confirm('¿Estás seguro de eliminar este Asignar Ruta?')) {
+        this.assignRouteService.deleteAssignRoute(idAsignarRuta).subscribe({
+          next: () => {
+            this.updateVehicleState(idVehiculo, false);
+            this.assignRoutesDt = this.assignRoutesDt.filter(assignRouteDt => assignRouteDt.idAsignarRuta !== idAsignarRuta);
+          },
+          error: () => {
+            window.alert('Error al eliminar Asignar Ruta');
+          }
+        });
+      }
+    } else {
+      window.alert('Asignación de ruta no encontrada');
     }
   }
-
 
 }

@@ -11,7 +11,6 @@ export interface assignRouteDto {
   }
   
   export interface VehiculoDTO {
-    peso: number;
     placa: string;
     estado: boolean;
     marca: string;

@@ -6,6 +6,7 @@ import { PaqueteComponent } from './paquete/paquete.component';
 import { UserComponent } from './user/user.component';
 import { RouteComponent } from './route/route.component';
 import { AssignRouteComponent } from './assign-route/assign-route.component';
+import { HomeConductorComponent } from './home-conductor/home-conductor.component';
 
 export const routes: Routes = [
     {
@@ -35,5 +36,9 @@ export const routes: Routes = [
     {
         path:"assign",
         component:AssignRouteComponent
+    },
+    {
+        path:"homedriver",
+        component:HomeConductorComponent
     }
 ];

@@ -56,7 +56,6 @@ public class VehiculoService implements IVehiculoService{
                     Vehiculo vehiculoActualizar = vehiculoExistente.get();
 
                     vehiculoActualizar.setTipoVehiculo(vehiculo.getTipoVehiculo());
-                    vehiculoActualizar.setPeso(vehiculo.getPeso());
                     vehiculoActualizar.setMarca(vehiculo.getMarca());
                     vehiculoActualizar.setPlaca(vehiculo.getPlaca());
                     vehiculoActualizar.setEstado(vehiculo.isEstado());

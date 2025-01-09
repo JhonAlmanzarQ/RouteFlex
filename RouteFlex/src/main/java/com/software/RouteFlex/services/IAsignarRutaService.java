@@ -10,7 +10,7 @@ public interface IAsignarRutaService {
     //Listar por id usuario
     List<AsignarRuta> listarAsignarUsuario(Long idUsuario);
 
-    //Listar por id
+    //Listar por id conductor
     List<AsignarRutaDto> listarAsignarConductor(Long idConductor);
 
     //Crear

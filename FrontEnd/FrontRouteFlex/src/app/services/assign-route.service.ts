@@ -13,9 +13,14 @@ export class AssignRouteService {
 
   constructor(private http: HttpClient) {}
 
-  //Listar
+  //Listar por usuario
   listAssignRoute(idUser: number): Observable<assignRouteDto[]> {
     return this.http.get<assignRouteDto[]>(`${this.apiUrl}/listarUsuario/${idUser}`);
+  }
+
+  //Listar por conductor
+  listAssignRouteDriver(idDriver: number): Observable<assignRouteDto[]> {
+    return this.http.get<assignRouteDto[]>(`${this.apiUrl}/listar/${idDriver}`);
   }
 
   //Crear

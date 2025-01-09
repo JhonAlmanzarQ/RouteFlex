@@ -24,7 +24,7 @@ public class PaqueteEnvio {
 
     private String Direccion;
 
-    private String Peso;
+    private String estado;
 
     private String Fecha;
 

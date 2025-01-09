@@ -5,7 +5,7 @@ export interface paquete {
     nombre:String;
     numero:number;
     direccion:String;
-    peso:number;
+    estado:String;
     fecha:String
     usuario: usuario;
 }

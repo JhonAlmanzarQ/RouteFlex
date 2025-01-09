@@ -45,7 +45,6 @@ public class AsignarRutaService implements IAsignarRutaService {
 
             // Mapeo de la VehiculoDTO
             AsignarRutaDto.VehiculoDTO vehiculoDTO = new AsignarRutaDto.VehiculoDTO(
-                    asignarRuta.getVehiculo().getPeso().intValue(),
                     asignarRuta.getVehiculo().getPlaca(),
                     asignarRuta.getVehiculo().isEstado(),
                     asignarRuta.getVehiculo().getMarca(),

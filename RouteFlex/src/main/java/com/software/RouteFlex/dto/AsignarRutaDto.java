@@ -30,7 +30,6 @@ public class AsignarRutaDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class VehiculoDTO {
-        private int peso;
         private String placa;
         private boolean estado;
         private String marca;

@@ -115,11 +115,12 @@ body {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    border: 1px solid #ccc;
 }
 
 .btn-information {
     background-color: transparent; 
-    color: #333; 
+    color: #333;
     border: none; 
     font-size: 15px; 
     cursor: pointer; 
@@ -127,51 +128,20 @@ body {
 }
 
 .btn-information:hover {
-    text-decoration: underline; /* Subrayado al pasar el mouse */
+    text-decoration: underline;
     color: #000000;
 }
 
-
-/* Inventory Section */
-.inventory {
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 20px 20px 35px 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+h2 {
+    font-size: 24px;
+    color: #2ea04b;
+    margin-bottom: 10px;
 }
 
-.inventory h2 {
-    font-size: 20px;
-    margin-bottom: 20px;
-}
-
-.inventory .actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.inventory .actions input {
-    width: 300px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.inventory .actions .btn-primary{
-    background-color: #2ea04b;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-}
-
-.inventory .actions .btn-primary:hover {
-    background-color: #388e3c;
+h3 {
+    font-size: 24px;
+    color: #2ea04b;
+    margin-bottom: 25px;
 }
 
 /* Table */
@@ -239,96 +209,20 @@ tbody td a:hover {
 /* Action Buttons */
 .btn {
     border: none;
-    padding: 5px 10px;
+    padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
     margin: 0 5px;
     font-size: 16px;
 }
 
-.btn.edit {
+.btn.delete {
+    margin-top: 25px;
     background-color: #4caf50;
     color: #fff;
 }
 
-.btn.edit:hover {
-    background-color: #388e3c;
-}
-
-.btn.delete {
-    background-color: #e53935;
-    color: #fff;
-}
-
 .btn.delete:hover {
-    background-color: #d32f2f;
-}
-
-
-/* Formulario para crear nuevo vehículo */
-.vehicle-form {
-    display: none;
-    position: fixed; 
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -50%); 
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 15px; 
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); 
-    width: 450px; 
-    z-index: 1000; 
-    display: flex;
-    flex-direction: column;
-    animation: fadeIn 0.3s ease-out; 
-}
-
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
-.vehicle-form input,
-.vehicle-form select {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 8px; 
-    font-size: 16px;
-    color: #333;
-    transition: border-color 0.3s ease; 
-}
-
-
-/* Botones dentro del formulario */
-.vehicle-form button {
-    background-color: #2ea04b;
-    color: #fff;
-    margin-right: 10px; 
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px; 
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 15px;
-    transition: background-color 0.3s ease; 
-}
-
-.vehicle-form button:hover {
-    background-color: #1c9c47; 
-}
-
-/* Botón cancelar */
-.vehicle-form .btn-secondary {
-    background-color: #e53935;
-}
-
-.vehicle-form .btn-secondary:hover {
-    background-color: #d32f2f;
+    background-color: #388e3c;
 }
 

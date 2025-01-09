@@ -57,7 +57,7 @@ public class PaqueteEnvioService implements IPaqueteEnvioService{
             paqueteEnvioActualizar.setNombre(paqueteEnvio.getNombre());
             paqueteEnvioActualizar.setNumero(paqueteEnvio.getNumero());
             paqueteEnvioActualizar.setDireccion(paqueteEnvio.getDireccion());
-            paqueteEnvioActualizar.setPeso(paqueteEnvio.getPeso());
+            paqueteEnvioActualizar.setEstado(paqueteEnvio.getEstado());
             paqueteEnvioActualizar.setFecha(paqueteEnvio.getFecha());
 
             return paqueteRepository.save(paqueteEnvioActualizar);

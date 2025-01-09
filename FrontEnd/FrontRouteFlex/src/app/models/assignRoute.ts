@@ -5,7 +5,9 @@ export interface assignRoute {
     ruta: {
       idRuta:number
     }        
-    vehiculo:{idVehiculo:number}
+    vehiculo:{
+      idVehiculo:number
+    }
     conductor: 
     {
       idConductor:number

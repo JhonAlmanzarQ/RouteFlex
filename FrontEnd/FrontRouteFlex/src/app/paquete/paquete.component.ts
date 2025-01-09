@@ -13,16 +13,20 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class PaqueteComponent implements OnInit {
 
+  idUser!: number;
+
+  userName: string | null = null;
+
   paquetes: paquete[] = [];
 
   newPaquete: any = {
     usuario: {
-      idUsuario: 1,
+      idUsuario: this.idUser,
     },
     nombre: '',
     numero: 0,
     direccion: '',
-    pesoPaquete: 0,
+    estado: 'Pendiente',
     fecha: ''
   };
 
@@ -35,9 +39,28 @@ export class PaqueteComponent implements OnInit {
 
   constructor(private paqueteService: PaqueteService, private router: Router) {}
 
+  getId(): void {
+    const usuario = localStorage.getItem('idUser');
+    if (usuario) {
+      this.idUser = parseInt(usuario, 10);  
+    } else {
+      window.alert('Error');;
+    }
+  }
+
+  getName(): void {
+    const user = localStorage.getItem('nameUser');
+    if (user) {
+      this.userName = user;
+    } else {
+      window.alert('Error');
+    }
+  }
+
   ngOnInit(): void {
-    const idUsuario = 1;
-    this.paqueteService.listPaquete(idUsuario).subscribe({
+    this.getId();
+    this.getName();
+    this.paqueteService.listPaquete(this.idUser).subscribe({
       next: (response) => {
         this.paquetes = response;
       },
@@ -57,6 +80,7 @@ export class PaqueteComponent implements OnInit {
           this.resetForm();
           this.ngOnInit();
           this.showForm = false;
+          console.log(response);
         },
         error: (err) => {
           window.alert('Error al crear paquete');
@@ -74,12 +98,12 @@ export class PaqueteComponent implements OnInit {
     this.isEdit = false;
     this.newPaquete = {
       usuario: {
-        idUsuario: 1,
+        idUsuario: this.idUser,
       },
       nombre: '',
       numero: 0,
       direccion: '',
-      pesoPaquete: 0,
+      estado: 'Pendiente',
       fecha: ''
     };
   }
@@ -107,7 +131,7 @@ export class PaqueteComponent implements OnInit {
   }
 
   deletePaquete(idPaquete: number): void {
-    if (confirm('¿Estás seguro de eliminar este vehículo?')) {
+    if (confirm('¿Estás seguro de eliminar esta orden?')) {
       this.paqueteService.deletePaquete(idPaquete).subscribe({
         next: (response) => {
           this.paquetes = this.paquetes.filter(paquete => paquete.idPaqueteEnvio!== idPaquete);

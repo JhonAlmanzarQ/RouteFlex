@@ -13,11 +13,14 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class DriverComponent implements OnInit {
 
+  idUser!: number;
+  userName: string | null = null;
+
   drivers: driver[] = [];
 
   newDriver: any = {
     usuario: {
-      idUsuario: 1,
+      idUsuario: this.idUser,
     },
     nombre: '',
     apellido: '',
@@ -34,14 +37,36 @@ export class DriverComponent implements OnInit {
 
   constructor(private driverService:DriverService, private router: Router) {}
 
+
+  getId(): void {
+    const usuario = localStorage.getItem('idUser');
+    if (usuario) {
+      this.idUser = parseInt(usuario, 10);  
+    } else {
+      window.alert('Error');
+    }
+  }
+
+  getName(): void {
+    const user = localStorage.getItem('nameUser');
+    if (user) {
+      this.userName = user;
+    } else {
+      window.alert('Error');
+    }
+  }
+  
+
   ngOnInit(): void {
-    const idUsuario = 1;
-    this.driverService.listDriver(idUsuario).subscribe({
+    this.getName();
+    this.getId();
+
+    this.driverService.listDriver(this.idUser).subscribe({
       next: (response) => {
         this.drivers = response;
       },
       error: (err) => {
-        console.error(err);
+        window.alert('Error'); 
       }
     })
   }
@@ -72,7 +97,7 @@ export class DriverComponent implements OnInit {
     this.isEdit = false;
     this.newDriver = {
       usuario: {
-        idUsuario: 1,
+        idUsuario: this.idUser,
       },
       nombre: '',
       apellido: '',
@@ -104,7 +129,7 @@ export class DriverComponent implements OnInit {
   }
 
   deleteDriver(idConductor: number): void {
-    if (confirm('¿Estás seguro de eliminar este vehículo?')) {
+    if (confirm('¿Estás seguro de eliminar este conductor?')) {
       this.driverService.deleteDriver(idConductor).subscribe({
         next: (response) => {
           this.drivers = this.drivers.filter(driver => driver.idConductor!== idConductor);
