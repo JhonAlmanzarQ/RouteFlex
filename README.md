@@ -11,7 +11,13 @@ Para probar la plataforma, puedes utilizar las siguientes credenciales:
 - **Conductor**:
   - **Usuario**: `Daniell`
   - **Contraseña**: `1234`
+  
+## Nota
+Para evitar inconvenientes al generar una orden, asegúrate de que la dirección no incluya caracteres especiales como *, #. Debe seguir un formato similar a los siguientes ejemplos:
 
+- Carrera 40 41-50, Bucaramanga, Santander
+- Calle 22 21-21, Bucaramanga, Santander
+- Carrera 18 36-43, Bucaramanga, Santander
 ---
 
 ## Introducción
