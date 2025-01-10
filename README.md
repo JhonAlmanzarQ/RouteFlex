@@ -5,7 +5,7 @@
 Para probar la plataforma, puedes utilizar las siguientes credenciales:
 
 - **Administrador**:
-  - **Usuario**: `Admin`
+  - **Usuario**: `JhonJairo`
   - **Contraseña**: `1234`
   
 - **Conductor**:
