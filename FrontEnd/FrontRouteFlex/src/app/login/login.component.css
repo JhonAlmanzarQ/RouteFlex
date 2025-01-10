@@ -83,7 +83,7 @@ button {
     transition: all 0.3s ease;
 }
 
-.free-button {
+.login-button-User {
     background-color: #1fd379;
 }
 
@@ -92,7 +92,7 @@ button {
     padding: 10px 15px;
 }
 
-.free-button, .back-button:hover {
+.login-button-User, .back-button:hover {
     background-color: #18ac7a;
     transform: translateY(-2px);
 }
